@@ -5,6 +5,9 @@ urlpatterns = [
     path('', views.getOverView),
     path('sellers/', views.getAllSeller),
     path('createSeller/', views.createSeller),
+
     path('clients/', views.getAllClient),
-    path('createClient/', views.createClient)
+    path('createClient/', views.createClient),
+
+    path('admins/', views.adminList)
 ]

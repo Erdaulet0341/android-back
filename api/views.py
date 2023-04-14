@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Seller, Client
-from .serializers import SellerSerializer, ClientSerializer
+from .models import Seller, Client, Admin
+from .serializers import SellerSerializer, ClientSerializer, AdminSerializer
 
 
 @api_view(['GET'])
@@ -50,3 +50,10 @@ def createClient(request):
     return Response({
         "error":"invalid client"
     })
+
+
+@api_view(['GET'])
+def adminList(request):
+    admins = Admin.objects.all()
+    adminsSer = AdminSerializer(admins, many=True)
+    return Response(adminsSer.data)
