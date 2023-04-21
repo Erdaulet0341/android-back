@@ -25,13 +25,10 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
-
-class Product_Details(models.Model):
-    description = models.TextField()
-    imageURL = models.TextField()
-    price = models.IntegerField()
-    quantity = models.IntegerField()
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    description = models.TextField(default="")
+    imageURL = models.TextField(default="")
+    price = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=0)
 
 
 class Rating(models.Model):

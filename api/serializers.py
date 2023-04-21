@@ -29,13 +29,6 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = '__all__'
 
-
-class ProductDetailsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product_Details
-        fields = '__all__'
-
-
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
