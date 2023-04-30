@@ -20,6 +20,14 @@ urlpatterns = [
 
 
     path('products/', views.Products.as_view()),
+    path('popularProducts/', views.popularProducts),
     path('productById/<int:product_id>/', views.ProductById.as_view()),
+
+
     path('ratings/', views.RatingsView.as_view()),
+    path('ratings/<int:product_id>/', views.RatingById.as_view()),
+
+    path('likes/', views.LikeProduct.as_view()),
+    path('likes/<int:client_id>/', views.LikeProductById.as_view()),
+    path('likesDel/<int:product_id>/', views.LikeProductById.as_view()),
 ]

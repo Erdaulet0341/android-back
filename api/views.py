@@ -292,3 +292,100 @@ class ProductById(APIView):
         serializer = ProductSerializer(product, many=False)
 
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+def popularProducts(request):
+    pro = Product.objects.all()[:2]
+    proSer = ProductSerializer(pro, many = True)
+    return Response(proSer.data)
+
+
+class RatingById(APIView):
+
+    def get(self, request, product_id):
+        try:
+            rating = Rating.objects.filter(product_id = product_id)
+            ratingSer = RatingSerializer(rating, many=True)
+            return Response(ratingSer.data)
+        except Rating.DoesNotExist as e:
+            return JsonResponse({"error": str(e)})
+
+    def delete(self, request, seller_id):
+        try:
+            seller = Seller.objects.get(id = seller_id)
+        except Seller.DoesNotExist as e:
+            return JsonResponse({"error": str(e)})
+        
+        seller.delete()
+        return JsonResponse({"delete": "succesful"})
+    
+    def put(self, request, seller_id):
+        try:
+            seller = Seller.objects.get(id = seller_id)
+        except Seller.DoesNotExist as e:
+            return JsonResponse({"error": str(e)})
+
+        data = json.loads(request.body)
+
+        username = data.get('username', '')
+        email = data.get('email','')
+        company_name = data.get('company_name','')
+        password = data.get('password','')
+
+        seller.username = username
+        seller.email = email
+        seller.company_name = company_name
+        seller.password = password
+        seller.save()
+
+        serializer = SellerSerializer(seller, many=False)
+
+        return Response(serializer.data)
+    
+
+
+class LikeProduct(APIView):
+    def get(self, request):
+        likes = LikeProducts.objects.all()
+        likesSer = LikedSerializer(likes, many = True)
+        return Response(likesSer.data)
+    
+    def post(self, request):
+        serializer = LikedSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response({
+            "error":"invalid category"
+        })
+    
+class LikeProductById(APIView):
+
+    def get(self, request, client_id):
+        try:
+            likes = LikeProducts.objects.filter(client_id = client_id)
+            likesSer = LikedSerializer(likes, many=True)
+            return Response(likesSer.data)
+        except LikeProduct.DoesNotExist as e:
+            return JsonResponse({"error": str(e)})
+        
+    def delete(self, request, product_id):
+        try:
+            like = LikeProducts.objects.get(product_id = product_id)
+        except LikeProducts.DoesNotExist as e:
+            return JsonResponse({"error": str(e)})
+        
+        like.delete()
+        return JsonResponse({"delete": "succesful"})
+        
+
+class LikeProductByIdAllProduct(APIView):
+
+    def get(self, request, client_id):
+        try:
+            likes = LikeProducts.objects.filter(client_id = client_id)
+            likesSer = LikedSerializer(likes, many=True)
+            return Response(likesSer.data)
+        except LikeProduct.DoesNotExist as e:
+            return JsonResponse({"error": str(e)})

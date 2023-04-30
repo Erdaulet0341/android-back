@@ -33,3 +33,9 @@ class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = '__all__'
+
+
+class LikedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LikeProducts
+        fields = '__all__'

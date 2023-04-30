@@ -37,3 +37,8 @@ class Rating(models.Model):
     comment = models.TextField()
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+
+class LikeProducts(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
