@@ -6,6 +6,11 @@ urlpatterns = [
     path('createSeller/', views.Sellers.as_view()),
     path('SellerById/<int:seller_id>/', views.SellerById.as_view()),
     path('SellerById/<int:seller_id>/products/', views.getOneSellerProdcts),
+    path('SellerByName/<str:name>/', views.SellerByName),
+
+
+    #filter
+    path('filter/<int:company_id>/<int:category_id>/', views.filterComCat),
 
     path('clients/', views.Clients.as_view()),
     path('createClient/', views.Clients.as_view()),

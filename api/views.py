@@ -243,6 +243,19 @@ def CategoryByName(request, name):
     catSer = CategorySerializer(cat, many = False)
     return Response(catSer.data)
 
+@api_view(['GET'])
+def SellerByName(request, name):
+    cat = Seller.objects.filter(company_name = name)[0]
+    catSer = SellerSerializer(cat, many = False)
+    return Response(catSer.data)
+
+@api_view(['GET'])
+def filterComCat(request, company_id, category_id):
+    companyList = Product.objects.filter(seller_id = company_id)
+    categoryList = companyList.filter(category_id = category_id)
+    prodSer = ProductSerializer(categoryList, many = True)
+    return Response(prodSer.data)
+
 class ProductById(APIView):
     def get(self, request, product_id):
         try:
@@ -296,7 +309,7 @@ class ProductById(APIView):
 
 @api_view(['GET'])
 def popularProducts(request):
-    pro = Product.objects.all()[:2]
+    pro = Product.objects.all()[:4]
     proSer = ProductSerializer(pro, many = True)
     return Response(proSer.data)
 
