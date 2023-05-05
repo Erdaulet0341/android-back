@@ -391,14 +391,62 @@ class LikeProductById(APIView):
         
         like.delete()
         return JsonResponse({"delete": "succesful"})
+    
         
-
-class LikeProductByIdAllProduct(APIView):
+class Carts(APIView):
+    def get(self, request):
+        cart = Cart.objects.all()
+        cartSer = CartSerializer(cart, many = True)
+        return Response(cartSer.data)
+    
+    def post(self, request):
+        serializer = CartSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response({
+            "error":"invalid category"
+        })
+    
+class CartById(APIView):
 
     def get(self, request, client_id):
         try:
-            likes = LikeProducts.objects.filter(client_id = client_id)
-            likesSer = LikedSerializer(likes, many=True)
-            return Response(likesSer.data)
-        except LikeProduct.DoesNotExist as e:
+            cart = Cart.objects.filter(client_id = client_id)
+            cartSer = CartSerializer(cart, many=True)
+            return Response(cartSer.data)
+        except Cart.DoesNotExist as e:
+            return JsonResponse({"error": str(e)})
+        
+    def delete(self, request, cart_id):
+        try:
+            cart = Cart.objects.get(id = cart_id)
+        except Cart.DoesNotExist as e:
+            return JsonResponse({"error": str(e)})
+        
+        cart.delete()
+        return JsonResponse({"delete": "succesful"})
+    
+    def put(self, request, cart_id):
+        try:
+            cart = Cart.objects.get(id = cart_id)
+        except Cart.DoesNotExist as e:
+            return JsonResponse({"error": str(e)})
+        
+        data = json.loads(request.body)
+        check_order = data.get('check_order', '')
+        cart.check_order = check_order
+        cart.save()
+        serializer = CartSerializer(cart, many=False)
+
+        return Response(serializer.data)
+    
+class CartByIdSeller(APIView):
+
+    def get(self, request, seller_id):
+        try:
+            cart = Cart.objects.filter(seller_id = seller_id)
+            cartSer = CartSerializer(cart, many=True)
+            return Response(cartSer.data)
+        except Cart.DoesNotExist as e:
             return JsonResponse({"error": str(e)})

@@ -42,3 +42,9 @@ class Rating(models.Model):
 class LikeProducts(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+class Cart(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    check_order = models.CharField(max_length=8)
