@@ -1,0 +1,14 @@
+{
+    "builds": [
+    {
+    "src": "final_app_android/wsgi.py",
+    "use": "@vercel/python"
+    }
+    ],
+    "routes": [
+    {
+    "src": "/(.*)",
+    "dest": "final_app_android/wsgi.py"
+    }
+    ]
+    }
