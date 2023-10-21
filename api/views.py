@@ -442,7 +442,6 @@ class CartById(APIView):
         return Response(serializer.data)
     
 class CartByIdSeller(APIView):
-
     def get(self, request, seller_id):
         try:
             cart = Cart.objects.filter(seller_id = seller_id)
