@@ -48,3 +48,15 @@ class Cart(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
     check_order = models.CharField(max_length=8)
+
+class Message(models.Model):
+    clientid = models.IntegerField(default=0)
+    sellerid= models.IntegerField(default=0)
+    productid = models.IntegerField(default=0)
+    message = models.TextField()
+    timestamp = models.TextField()
+    sendtype = models.TextField()
+    companyname = models.TextField()
+    productname = models.TextField()
+    clientname = models.TextField()
+    clientcity = models.TextField()

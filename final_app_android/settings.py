@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'corsheaders',
+    'channels',
+
 ]
 
 MIDDLEWARE = [
@@ -80,7 +82,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'final_app_android.wsgi.application'
 
-
+ASGI_APPLICATION = 'final_app_android.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': "channels.layers.InMemoryChannelLayer"
+        }
+    }
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

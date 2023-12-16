@@ -47,4 +47,6 @@ urlpatterns = [
     path('cartsSeller/<int:seller_id>/', views.CartByIdSeller.as_view()),
     path('cartsDel/<int:cart_id>/', views.CartById.as_view()),
     path('cartsUpdate/<int:cart_id>/', views.CartById.as_view()),
+    
+    path('messages/', views.Messages.as_view()),
 ]

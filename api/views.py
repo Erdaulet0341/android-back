@@ -449,3 +449,24 @@ class CartByIdSeller(APIView):
             return Response(cartSer.data)
         except Cart.DoesNotExist as e:
             return JsonResponse({"error": str(e)})
+        
+class Messages(APIView):
+    def get(self, request):
+        message = Message.objects.all()
+        messageSer = MessageSerializer(message, many = True)
+        return Response(messageSer.data)
+    
+    def post(self, request):
+        serializer = MessageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response({
+            "error":"invalid message"
+        })
+    
+    def delete(self, request):
+        messages = Message.objects.all()
+        messages.delete()
+
+        return Response({"message": "All messages deleted successfully"})
