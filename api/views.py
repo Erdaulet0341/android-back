@@ -1,6 +1,7 @@
 from rest_framework.decorators import api_view, APIView
 from rest_framework.response import Response
 from django.http.response import JsonResponse
+from rest_framework.permissions import IsAuthenticated
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
 from .serializers import *
@@ -48,6 +49,9 @@ def getAllClient(request):
     return Response(serializer.data)
 
 class Clients(APIView):
+
+    # permission_classes = [IsAuthenticated]
+
     def get(self, request):
         clients = Client.objects.all()
         serializer = ClientSerializer(clients, many=True)
