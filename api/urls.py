@@ -10,7 +10,7 @@ urlpatterns = [
     path('SellerByName/<str:name>/', views.SellerByName),
 
 
-    #filter
+    # filter
     path('filter/<int:company_id>/<int:category_id>/', views.filterComCat),
 
     # client
